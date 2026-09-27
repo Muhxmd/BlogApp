@@ -1,0 +1,100 @@
+<!-- Main Navigation -->
+<nav class="navbar navbar-expand-lg custom-navbar">
+
+  <div class="container-fluid">
+
+    <!-- Logo -->
+    <%= link_to root_path, class: "navbar-brand brand-logo" do %>
+      <span class="brand-blog">BLOG</span>
+    <% end %>
+
+    <!-- Mobile Menu Button -->
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+      <span class="navbar-toggler-icon"></span>
+
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav ml-auto align-items-lg-center">
+
+        <!-- Home -->
+        <li class="nav-item">
+          <%= link_to "Home",
+              root_path,
+              class: "nav-link nav-minimal" %>
+        </li>
+
+        <!-- Articles -->
+        <li class="nav-item">
+          <%= link_to "Articles",
+              posts_path,
+              class: "nav-link nav-minimal" %>
+        </li>
+
+        <% if user_signed_in? %>
+
+          <!-- Add Article -->
+          <li class="nav-item">
+            <%= link_to "Add Article",
+                new_post_path,
+                class: "nav-link nav-minimal" %>
+          </li>
+
+          <!-- Your Articles -->
+          <li class="nav-item">
+            <%= link_to "Your Articles",
+                my_articles_path,
+                class: "nav-link nav-minimal" %>
+          </li>
+
+          <!-- Edit Profile -->
+          <li class="nav-item">
+            <%= link_to "Profile",
+                edit_user_registration_path,
+                class: "nav-link nav-minimal" %>
+          </li>
+
+          <!-- Sign Out -->
+          <li class="nav-item">
+            <%= button_to "Sign Out",
+                destroy_user_session_path,
+                method: :delete,
+                class: "nav-link nav-minimal nav-signout",
+                form: { class: "logout-form" },
+                onclick: "return confirm('Are you sure?');" %>
+          </li>
+
+        <% else %>
+
+          <!-- Sign In -->
+          <li class="nav-item">
+            <%= link_to "Log In",
+                new_user_session_path,
+                class: "nav-link nav-minimal" %>
+          </li>
+
+          <!-- Sign Up -->
+          <li class="nav-item">
+            <%= link_to "Sign Up",
+                new_user_registration_path,
+                class: "nav-link nav-minimal" %>
+          </li>
+
+        <% end %>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>

@@ -1,0 +1,47 @@
+<h1>Your Articles</h1>
+
+<% @posts.each do |post| %>
+  <div class="card mb-4">
+    <div class="card-body">
+      <h2 class="card-title"><%= post.title %></h2>
+
+      <p class="card-text">
+               <%= truncate(strip_tags(post.body.to_s), length: 250) %>
+
+
+      </p>
+
+     <div class="article-actions">
+
+  <%= link_to "Read Article",
+      post_path(post),
+      class: "btn btn-primary" %>
+
+  <%= link_to "Edit",
+      edit_post_path(post),
+      class: "btn btn-warning" %>
+
+  <%= button_to "Destroy",
+      post_path(post),
+      method: :delete,
+      class: "btn btn-danger bao",
+      form: { class: "delete-form" } %>
+
+</div>
+    </div>
+  </div>
+<% end %>
+
+<% if @posts.empty? %>
+  <div class="alert alert-info">
+    You haven't made any articles yet.
+    <%= link_to "Make Your First Article", new_post_path, class: "btn btn-primary ml-2" %>
+  </div>
+<% else %>
+
+  <% @posts.each do |post| %>
+    <!-- your article code here -->
+
+  <% end %>
+
+<% end %>

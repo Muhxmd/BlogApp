@@ -1,0 +1,221 @@
+<!-- Homepage Hero -->
+<section class="blog-hero-new">
+
+  <div class="hero-inner">
+
+    <!-- Left Side: Hero Visual -->
+    <div class="hero-visual">
+
+      <div class="hero-image-card">
+        <div class="hero-illustration">
+          ✍️
+        </div>
+      </div>
+
+      <!-- Decorative Shapes -->
+      <span class="hero-shape hero-circle hero-circle-one"></span>
+      <span class="hero-shape hero-circle hero-circle-two"></span>
+      <span class="hero-shape hero-circle hero-circle-three"></span>
+
+    </div>
+
+    <!-- Right Side: Hero Content -->
+    <div class="hero-content-new">
+
+      <span class="hero-badge-new">
+        ✦ YOUR PERSONAL BLOG
+      </span>
+
+      <h1>
+        Write Your
+        <span>Article</span>
+        here.
+      </h1>
+
+      <p>
+        Discover interesting articles, explore new ideas,
+        and share your thoughts with the world.
+      </p>
+
+      <% if user_signed_in? %>
+
+        <%= link_to "+ Write an Article",
+            new_post_path,
+            class: "hero-btn-new" %>
+
+      <% else %>
+
+        <%= link_to "Start Exploring",
+            posts_path,
+            class: "hero-btn-new" %>
+
+      <% end %>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- Latest Articles -->
+<section class="homepage-articles">
+
+<!-- Decorative Background Capsules -->
+<div class="article-bg-shapes" aria-hidden="true">
+  <span class="capsule capsule-one"></span>
+  <span class="capsule capsule-two"></span>
+  <span class="capsule capsule-three"></span>
+  <span class="capsule capsule-four"></span>
+</div>
+
+  <div class="section-heading">
+    <div>
+      <span class="section-label">DISCOVER SOMETHING NEW</span>
+      <h2>Latest Articles</h2>
+      <p>Explore the latest stories from our community.</p>
+    </div>
+
+    <%= link_to "View All Articles →",
+        posts_path,
+        class: "view-all-link" %>
+  </div>
+
+  <% if @posts.any? %>
+
+    <div class="row">
+
+      <% @posts.each do |post| %>
+
+        <div class="col-lg-4 col-md-6 mb-4 d-flex">
+
+          <div class="blog-post-card">
+
+            <!-- Article Thumbnail -->
+            <div class="article-cover">
+
+              <% if post.thumbnail.attached? %>
+
+                <%= image_tag post.thumbnail,
+                    class: "post-thumbnail",
+                    alt: post.title %>
+
+              <% else %>
+
+                <div class="article-cover-placeholder">
+                  <span>✍️</span>
+                  <small>YOUR NEXT GREAT READ</small>
+                </div>
+
+              <% end %>
+
+            </div>
+
+            <!-- Article Content -->
+            <div class="post-card-content">
+
+              <div class="post-card-top">
+                <span class="post-category">ARTICLE</span>
+                <span class="post-star">✦</span>
+              </div>
+
+              <h3><%= post.title %></h3>
+
+              <p>
+                <%= truncate(
+                  strip_tags(post.body.to_s),
+                  length: 150
+                ) %>
+              </p>
+
+              <!-- Card Footer -->
+              <div class="post-card-footer">
+
+                <span class="post-read-time">
+                  Read &amp; Explore
+                </span>
+
+                <%= link_to "Read Article →",
+                    post_path(post),
+                    class: "post-read-link" %>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+
+    <div class="empty-blog">
+      <h3>No articles yet!</h3>
+      <p>Your next great story could be the first one.</p>
+
+      <% if user_signed_in? %>
+        <%= link_to "Create Your First Article",
+            new_post_path,
+            class: "hero-btn" %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</section>
+
+
+<!-- Newsletter Subscribe Section -->
+<section class="newsletter-section">
+
+  <div class="newsletter-card">
+
+    <!-- Left: Decorative Shapes -->
+    <div class="newsletter-visual" aria-hidden="true">
+
+      <span class="newsletter-capsule capsule-a"></span>
+      <span class="newsletter-capsule capsule-b"></span>
+      <span class="newsletter-capsule capsule-c"></span>
+      <span class="newsletter-capsule capsule-d"></span>
+      <span class="newsletter-capsule capsule-e"></span>
+      <span class="newsletter-capsule capsule-f"></span>
+
+    </div>
+
+    <!-- Right: Subscribe Content -->
+    <div class="newsletter-content">
+
+      <h2>Subscribe</h2>
+
+      <p>
+        Subscribe to our newsletter and get updates
+        on our exclusive stories.
+      </p>
+
+      <form class="newsletter-form">
+
+        <label for="newsletter-email" class="sr-only">
+          Email Address
+        </label>
+
+        <input
+          type="email"
+          id="newsletter-email"
+          name="email"
+          placeholder="Email Address"
+          required
+        >
+
+        <button type="submit">
+          SUBSCRIBE
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>

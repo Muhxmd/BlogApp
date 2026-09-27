@@ -1,0 +1,204 @@
+<% content_for :title, "Articles" %>
+
+<div class="articles-index-page">
+
+<!-- Decorative Background Capsules -->
+<div class="articles-bg-shapes" aria-hidden="true">
+  <span class="articles-capsule articles-capsule-one"></span>
+  <span class="articles-capsule articles-capsule-two"></span>
+  <span class="articles-capsule articles-capsule-three"></span>
+  <span class="articles-capsule articles-capsule-four"></span>
+  <span class="articles-capsule articles-capsule-five"></span>
+  <span class="articles-capsule articles-capsule-six"></span>
+</div>
+
+  <div class="articles-layout">
+
+    <!-- MAIN CONTENT -->
+    <main class="articles-main">
+
+      <!-- Page Heading -->
+      <div class="articles-page-heading">
+        <h1>For you</h1>
+        <p>Discover stories, ideas, and inspiration.</p>
+      </div>
+
+  <!-- Working Article Search -->
+<%= form_with url: posts_path,
+    method: :get,
+    local: true,
+    class: "articles-search" do |f| %>
+
+  <span>⌕</span>
+
+  <%= f.search_field :q,
+      value: @query,
+      placeholder: "Search articles...",
+      aria: { label: "Search articles" } %>
+
+  <%= f.submit "Search", class: "article-search-button" %>
+
+<% end %>
+
+      <!-- Articles Feed -->
+      <div class="articles-feed">
+
+        <% if @posts.any? %>
+
+          <% @posts.each do |post| %>
+
+            <article class="feed-article-card">
+
+              <!-- Thumbnail -->
+              <div class="feed-article-image">
+
+                <% if post.thumbnail.attached? %>
+
+                  <%= image_tag post.thumbnail,
+                      alt: post.title %>
+
+                <% else %>
+
+                  <div class="feed-image-placeholder">
+                    ✍️
+                  </div>
+
+                <% end %>
+
+              </div>
+
+              <!-- Article Details -->
+              <div class="feed-article-content">
+
+                <div class="feed-article-top">
+                  <span class="feed-category">ARTICLE</span>
+                  <span class="feed-date">
+                    <%= post.created_at.strftime("%b %d") %>
+                  </span>
+                </div>
+
+                <h2>
+                  <%= link_to post.title, post_path(post) %>
+                </h2>
+
+                <p class="feed-article-excerpt">
+                  <%= truncate(
+                    strip_tags(post.body.to_s),
+                    length: 120
+                  ) %>
+                </p>
+
+                <!-- Article Footer -->
+                <div class="feed-article-footer">
+
+                  <span class="feed-read-label">
+                    Read & Explore
+                  </span>
+
+                  <%= link_to "Read Article →",
+                      post_path(post),
+                      class: "feed-read-button" %>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          <% end %>
+
+        <% else %>
+
+          <div class="articles-empty-state">
+            <h3>No articles yet</h3>
+            <p>Be the first to share a story with the community.</p>
+
+            <% if user_signed_in? %>
+              <%= link_to "Write an Article",
+                  new_post_path,
+                  class: "feed-read-button" %>
+            <% end %>
+          </div>
+
+        <% end %>
+
+      </div>
+
+    </main>
+
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="articles-sidebar">
+
+      <!-- Trending Articles -->
+      <div class="sidebar-box">
+
+        <h3>Trending Articles</h3>
+
+        <% @posts.first(3).each do |post| %>
+
+          <div class="trending-article">
+
+            <div class="trending-image">
+
+              <% if post.thumbnail.attached? %>
+
+                <%= image_tag post.thumbnail,
+                    alt: post.title %>
+
+              <% else %>
+
+                ✍️
+
+              <% end %>
+
+            </div>
+
+            <div class="trending-info">
+
+              <%= link_to post.title,
+                  post_path(post) %>
+
+              <small>
+                <%= post.created_at.strftime("%b %d") %>
+              </small>
+
+            </div>
+
+          </div>
+
+        <% end %>
+
+        <% if @posts.empty? %>
+          <p class="sidebar-empty">No articles to show yet.</p>
+        <% end %>
+
+      </div>
+
+
+      <!-- Recommended Section -->
+      <div class="sidebar-box recommended-box">
+
+        <h3>Explore</h3>
+
+        <p>Find something interesting to read.</p>
+
+        <%= link_to "Browse All Articles →",
+            posts_path,
+            class: "sidebar-explore-link" %>
+
+        <% if user_signed_in? %>
+
+          <%= link_to "+ Write an Article",
+              new_post_path,
+              class: "sidebar-create-link" %>
+
+        <% end %>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+</div>

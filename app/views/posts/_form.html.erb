@@ -1,0 +1,52 @@
+<div class="post-form-card">
+
+<%= form_with(model: post) do |form| %>
+
+  <div class="mb-3">
+  
+  <%= form.label :thumbnail, "Post Thumbnail", class: "form-label" %>
+  <%= form.file_field :thumbnail, class: "form-control", accept: "image/*" %>
+</div>
+
+    <% if post.errors.any? %>
+      <div class="form-errors">
+        <h3>
+          <%= pluralize(post.errors.count, "error") %>
+          prevented this article from being saved:
+        </h3>
+
+        <ul>
+          <% post.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :title, "Article Title", class: "form-label" %>
+
+      <%= form.text_field :title,
+          class: "form-control title-input",
+          placeholder: "Enter your article title..." %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :body, "Write Your Article", class: "form-label" %>
+
+      <%= form.rich_text_area :body,
+          class: "article-editor" %>
+    </div>
+
+    <div class="form-actions">
+      <%= form.submit(
+          post.persisted? ? "Update Article" : "Publish Article",
+          class: "btn btn-primary publish-btn"
+      ) %>
+
+      <%= link_to "Cancel", posts_path, class: "btn btn-light cancel-btn" %>
+    </div>
+
+  <% end %>
+
+</div>
