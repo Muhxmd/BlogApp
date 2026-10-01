@@ -6,3 +6,8 @@ default: &default
 development:
   <<: *default
   database: storage/development.sqlite3
+
+  # ADD THIS TEST BLOCK:
+test:
+  <<: *default
+  database: storage/test.sqlite3
