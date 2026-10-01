@@ -1,21 +1,14 @@
-<div class="post-form-card">
+<div class="max-w-3xl mx-auto bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 font-sans my-8">
 
-<%= form_with(model: post) do |form| %>
+  <%= form_with(model: post, class: "space-y-6") do |form| %>
 
-  <div class="mb-3">
-  
-  <%= form.label :thumbnail, "Post Thumbnail", class: "form-label" %>
-  <%= form.file_field :thumbnail, class: "form-control", accept: "image/*" %>
-</div>
-
+    <!-- Error Messages -->
     <% if post.errors.any? %>
-      <div class="form-errors">
-        <h3>
-          <%= pluralize(post.errors.count, "error") %>
-          prevented this article from being saved:
+      <div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl mb-6">
+        <h3 class="font-bold text-sm mb-2">
+          <%= pluralize(post.errors.count, "error") %> prevented this article from being saved:
         </h3>
-
-        <ul>
+        <ul class="list-disc list-inside text-xs space-y-1">
           <% post.errors.each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
@@ -23,28 +16,45 @@
       </div>
     <% end %>
 
-    <div class="form-group">
-      <%= form.label :title, "Article Title", class: "form-label" %>
+    <!-- Thumbnail Upload Field -->
+    <div class="space-y-2">
+      <%= form.label :thumbnail, "Post Thumbnail", class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
+      <div class="flex items-center justify-center w-full">
+        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <span class="text-2xl mb-1">📁</span>
+            <p class="text-xs text-gray-500 font-medium">Click to upload thumbnail image</p>
+            <p class="text-[10px] text-gray-400 mt-1">PNG, JPG, or GIF (max size depends on config)</p>
+          </div>
+          <%= form.file_field :thumbnail, class: "hidden", accept: "image/*" %>
+        </label>
+      </div>
+    </div>
 
-      <%= form.text_field :title,
-          class: "form-control title-input",
+    <!-- Article Title Field -->
+    <div class="space-y-2">
+      <%= form.label :title, "Article Title", class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
+      <%= form.text_field :title, 
+          class: "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] focus:bg-white text-sm text-gray-900 transition",
           placeholder: "Enter your article title..." %>
     </div>
 
-    <div class="form-group">
-      <%= form.label :body, "Write Your Article", class: "form-label" %>
-
-      <%= form.rich_text_area :body,
-          class: "article-editor" %>
+    <!-- Rich Text Body Field -->
+    <div class="space-y-2">
+      <%= form.label :body, "Write Your Article", class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
+      <div class="bg-gray-50 border border-gray-200 rounded-xl p-2 focus-within:ring-2 focus-within:ring-[#5B5CE6] focus-within:bg-white transition">
+        <%= form.rich_text_area :body, class: "min-h-[250px] focus:outline-none text-sm text-gray-800" %>
+      </div>
     </div>
 
-    <div class="form-actions">
+    <!-- Form Actions / Buttons -->
+    <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-100">
+      <%= link_to "Cancel", posts_path, class: "px-6 py-3 rounded-xl text-xs font-bold text-gray-600 hover:bg-gray-100 transition" %>
+      
       <%= form.submit(
           post.persisted? ? "Update Article" : "Publish Article",
-          class: "btn btn-primary publish-btn"
+          class: "bg-[#2952E3] hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl transition shadow-md hover:shadow-lg text-xs uppercase tracking-wider cursor-pointer"
       ) %>
-
-      <%= link_to "Cancel", posts_path, class: "btn btn-light cancel-btn" %>
     </div>
 
   <% end %>
