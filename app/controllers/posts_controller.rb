@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
 
-  # GET /posts or /posts.json
+ # GET /posts or /posts.json
  def index
   @query = params[:q].to_s.strip
 
@@ -31,7 +31,7 @@ end
   def edit
   end
 
-  # POST /posts or /posts.json
+ # POST /posts or /posts.json
  def create
   @post = current_user.posts.new(post_params)
 
@@ -45,7 +45,7 @@ end
     end
   end
 end
-  # PATCH/PUT /posts/1 or /posts/1.json
+# PATCH/PUT /posts/1 or /posts/1.json
 def update
   if @post.update(post_params)
     redirect_to root_path, notice: "Article updated successfully."
@@ -54,7 +54,7 @@ def update
   end
 end
 
-  # DELETE /posts/1 or /posts/1.json
+# DELETE /posts/1 or /posts/1.json
 def destroy
   @post.destroy
   redirect_to root_path, notice: "Article deleted successfully."
@@ -66,7 +66,7 @@ end
       @post = Post.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
+   # Only allow a list of trusted parameters through.
    def post_params
   params.require(:post).permit(:title, :body, :thumbnail)
 end
