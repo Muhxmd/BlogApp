@@ -32,12 +32,13 @@ end
   end
 
  # POST /posts or /posts.json
- def create
-  @post = current_user.posts.new(post_params)
+ # POST /posts or /posts.json
+def create
+  @post = Post.new(post_params)
 
   respond_to do |format|
     if @post.save
-    format.html { redirect_to my_articles_path, notice: "Post was successfully created." }
+      format.html { redirect_to @post, notice: "Post was successfully created." }
       format.json { render :show, status: :created, location: @post }
     else
       format.html { render :new, status: :unprocessable_content }
@@ -45,29 +46,25 @@ end
     end
   end
 end
+
 # PATCH/PUT /posts/1 or /posts/1.json
 def update
-  if @post.update(post_params)
-    redirect_to root_path, notice: "Article updated successfully."
-  else
-    render :edit, status: :unprocessable_entity
+  respond_to do |format|
+    if @post.update(post_params)
+      format.html { redirect_to @post, notice: "Article updated successfully." }
+      format.json { render :show, status: :ok, location: @post }
+    else
+      format.html { render :edit, status: :unprocessable_content }
+      format.json { render json: @post.errors, status: :unprocessable_content }
+    end
   end
 end
 
 # DELETE /posts/1 or /posts/1.json
 def destroy
   @post.destroy
-  redirect_to root_path, notice: "Article deleted successfully."
-end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params.expect(:id))
-    end
-
-   # Only allow a list of trusted parameters through.
-   def post_params
-  params.require(:post).permit(:title, :body, :thumbnail)
-end
+  respond_to do |format|
+    format.html { redirect_to posts_path, status: :see_other, notice: "Article deleted successfully." }
+    format.json { head :no_content }
+  end
 end
