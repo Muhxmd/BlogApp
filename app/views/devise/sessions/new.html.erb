@@ -1,60 +1,68 @@
-<div class="form-page">
+<% content_for :title, "Log In" %>
 
-  <div class="form-heading">
-    <h1>Welcome Back!</h1>
-    <p>Log in to manage your articles and continue writing.</p>
+<div class="max-w-md mx-auto px-4 py-16 font-sans">
+
+  <!-- Heading -->
+  <div class="text-center mb-8">
+    <span class="text-[10px] font-extrabold text-[#5B5CE6] tracking-widest uppercase bg-blue-50 px-3 py-1 rounded-full">
+      ✦ WELCOME BACK
+    </span>
+    <h1 class="text-3xl font-black text-gray-900 tracking-tight mt-3 mb-2">Log In</h1>
+    <p class="text-gray-500 text-xs sm:text-sm">Log in to manage your articles and continue writing.</p>
   </div>
 
-  <div class="post-form-card">
+  <!-- Main Login Card -->
+  <div class="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-gray-100">
 
-    <%= form_for(resource, as: resource_name,
-        url: session_path(resource_name),
-        html: { class: "post-form" }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6" }) do |f| %>
 
-      <!-- Email -->
-      <div class="mb-3">
-        <%= f.label :email, class: "form-label" %>
-
+      <!-- Email Field -->
+      <div class="space-y-2">
+        <%= f.label :email, class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
         <%= f.email_field :email,
             autofocus: true,
             autocomplete: "email",
-            class: "form-control",
+            class: "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] focus:bg-white text-sm text-gray-900 transition",
             placeholder: "Enter your email" %>
       </div>
 
-      <!-- Password -->
-      <div class="mb-3">
-        <%= f.label :password, class: "form-label" %>
-
+      <!-- Password Field -->
+      <div class="space-y-2">
+        <%= f.label :password, class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
         <%= f.password_field :password,
             autocomplete: "current-password",
-            class: "form-control",
+            class: "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] focus:bg-white text-sm text-gray-900 transition",
             placeholder: "Enter your password" %>
       </div>
 
-      <!-- Remember Me -->
+      <!-- Remember Me Checkbox -->
       <% if devise_mapping.rememberable? %>
-        <div class="mb-3 form-check">
-          <%= f.check_box :remember_me, class: "form-check-input" %>
-
-          <%= f.label :remember_me,
-              "Remember me",
-              class: "form-check-label" %>
+        <div class="flex items-center gap-2">
+          <%= f.check_box :remember_me, class: "w-4 h-4 text-[#5B5CE6] border-gray-300 rounded focus:ring-[#5B5CE6]" %>
+          <%= f.label :remember_me, "Remember me", class: "text-xs font-medium text-gray-600 select-none cursor-pointer" %>
         </div>
       <% end %>
 
       <!-- Log In Button -->
-      <div class="form-actions">
+      <div>
         <%= f.submit "Log In",
-            class: "btn btn-primary form-submit-btn" %>
+            class: "w-full bg-[#2952E3] hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow-md hover:shadow-lg text-xs uppercase tracking-wider cursor-pointer" %>
       </div>
 
     <% end %>
 
-    <!-- Devise Links -->
-    <div class="form-footer">
+    <!-- Devise Links Footer -->
+    <div class="mt-8 pt-6 border-t border-gray-100 text-center text-xs text-gray-500 space-y-2">
       <%= render "devise/shared/links" %>
     </div>
 
+
+
+<div class="max-w-md mx-auto px-4 py-6 font-sans">
+
+  <!-- Back Link -->
+  <div class="mb-6">
+    <%= link_to "← Back to Home", root_path, class: "text-xs font-bold text-gray-500 hover:text-[#5B5CE6] transition" %>
   </div>
+
 </div>
