@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = @post.comments.find(params[:id])
-    
+
     if @comment.user == current_user
       @comment.destroy
       redirect_to post_path(@post, anchor: "likes-section"), notice: "Comment deleted."
