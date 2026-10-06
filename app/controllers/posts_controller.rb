@@ -1,3 +1,4 @@
+
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
 
@@ -17,6 +18,8 @@ class PostsController < ApplicationController
           term: search_term
         )
     end
+
+    @pagy, @posts = pagy(@posts, limit: 5)
   end
 
   # GET /posts/1 or /posts/1.json
@@ -33,8 +36,8 @@ class PostsController < ApplicationController
   end
 
   # POST /posts or /posts.json
-  def create
-    @post = Post.new(post_params)
+def create
+  @post = current_user.posts.build(post_params)
 
     respond_to do |format|
       if @post.save
@@ -81,6 +84,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-   params.require(:post).permit(:title, :body, :user_id)
+    params.require(:post).permit(:title, :body, :user_id)
   end
 end
