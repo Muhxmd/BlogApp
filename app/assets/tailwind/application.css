@@ -1,1 +1,94 @@
+
 @import "tailwindcss";
+
+/* Pagy Pagination */
+.pagy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Base pagination item */
+.pagy a,
+.pagy span {
+  min-width: 38px;
+  height: 38px;
+  padding: 0 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 0.6rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+/* Previous / Next + inactive pages */
+.pagy a:not([aria-current="page"]):not([role="separator"]) {
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+/* Hover */
+.pagy a:not([aria-current="page"]):not([role="separator"]):hover {
+  background: #eff6ff;
+  color: #0460e2;
+  border-color: #bfdbfe;
+  transform: translateY(-1px);
+}
+
+/* Active page */
+.pagy a[aria-current="page"],
+.pagy span.current {
+  background: #0460e2;
+  color: #ffffff;
+  border: 1px solid #0460e2;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(4, 96, 226, 0.2);
+}
+
+/* Separators (...) */
+.pagy a[role="separator"],
+.pagy span.gap {
+  min-width: 32px;
+  padding: 0;
+  background: transparent;
+  color: #9ca3af;
+  border: none;
+}
+
+/* Disabled Previous / Next */
+.pagy a[aria-disabled="true"],
+.pagy span.disabled {
+  color: #d1d5db;
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  cursor: not-allowed;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .pagy {
+    gap: 0.3rem;
+  }
+
+  .pagy a,
+  .pagy span {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 0.6rem;
+    font-size: 0.8rem;
+  }
+}
