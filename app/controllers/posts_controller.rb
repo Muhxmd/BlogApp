@@ -35,7 +35,7 @@ class PostsController < ApplicationController
   def edit
   end
 
-  # POST /posts or /posts.json
+# POST /posts or /posts.json
 def create
   @post = current_user.posts.build(post_params)
 
