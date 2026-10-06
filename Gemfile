@@ -19,7 +19,7 @@ gem "jbuilder"
 gem "pagy"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
-gem "json", "~> 2.21"
+gem "json", "~> 3.0"
 gem "devise"
 gem "actiontext"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
