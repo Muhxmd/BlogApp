@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_03_100338) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_07_101209) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -70,7 +70,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_03_100338) do
 
   create_table "posts", force: :cascade do |t|
     t.text "body"
+    t.integer "comments_count", default: 0, null: false
     t.datetime "created_at", null: false
+    t.integer "likes_count", default: 0, null: false
     t.string "title"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
