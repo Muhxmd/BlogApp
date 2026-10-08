@@ -1,4 +1,3 @@
-
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
 
@@ -9,12 +8,14 @@ class PostsController < ApplicationController
     @posts = Post.order(created_at: :desc)
 
     if @query.present?
-      search_term = "%#{Post.sanitize_sql_like(@query)}%"
+      # 1. Downcase the search term before sending it to the database
+      search_term = "%#{Post.sanitize_sql_like(@query.downcase)}%"
 
       @posts = @posts
         .left_outer_joins(:rich_text_body)
         .where(
-          "posts.title LIKE :term OR action_text_rich_texts.body LIKE :term",
+          # 2. Use LOWER() on both the title and the body so everything matches perfectly
+          "LOWER(posts.title) LIKE :term OR LOWER(action_text_rich_texts.body) LIKE :term",
           term: search_term
         )
     end
@@ -35,9 +36,9 @@ class PostsController < ApplicationController
   def edit
   end
 
-# POST /posts or /posts.json
-def create
-  @post = current_user.posts.build(post_params)
+  # POST /posts or /posts.json
+  def create
+    @post = current_user.posts.build(post_params)
 
     respond_to do |format|
       if @post.save
