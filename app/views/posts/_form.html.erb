@@ -47,6 +47,19 @@
       </div>
     </div>
 
+    <!-- CHECK BOXES -->
+    <div class="space-y-2">
+      <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">What is your article about..</label>
+      <div class="flex flex-wrap gap-3 bg-gray-50 border border-gray-200 rounded-xl p-4">
+        <%= form.collection_check_boxes :category_ids, Category.all, :id, :name do |b| %>
+          <label class="inline-flex items-center space-x-2 cursor-pointer bg-white px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition">
+            <%= b.check_box(class: "rounded border-gray-300 text-[#5B5CE6] focus:ring-[#5B5CE6]") %>
+            <span class="text-xs font-medium text-gray-700"><%= b.text %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
     <!-- Form Actions / Buttons -->
     <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-100">
       <%= link_to "Cancel", posts_path, class: "px-6 py-3 rounded-xl text-xs font-bold text-gray-600 hover:bg-gray-100 transition" %>
