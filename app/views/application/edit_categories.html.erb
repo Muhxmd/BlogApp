@@ -1,0 +1,17 @@
+<div class="max-w-2xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
+  <h1 class="text-2xl font-bold mb-6">Customize Your Feed</h1>
+  <p class="text-gray-600 mb-6">Select the categories you want to see on your homepage.</p>
+
+  <%= form_with(scope: :user, url: update_user_categories_path, method: :patch, local: true) do |form| %>
+    <div class="flex flex-wrap gap-4 mb-6">
+      <%= form.collection_check_boxes :category_ids, @categories, :id, :name do |b| %>
+        <label class="inline-flex items-center space-x-2 cursor-pointer bg-gray-50 px-4 py-2 rounded-lg border hover:bg-gray-100">
+          <%= b.check_box(class: "rounded border-gray-300 text-indigo-600 focus:ring-indigo-500") %>
+          <span class="text-gray-800 font-medium"><%= b.text %></span>
+        </label>
+      <% end %>
+    </div>
+
+    <%= form.submit "Save Preferences", class: "bg-indigo-600 text-white px-6 py-2 rounded shadow hover:bg-indigo-700 cursor-pointer" %>
+  <% end %>
+</div>

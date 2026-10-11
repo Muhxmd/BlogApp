@@ -116,4 +116,14 @@
     </div>
 
   </article>
+
+  <% if post.categories.any? %>
+  <div class="flex flex-wrap gap-2 mt-2 mb-3">
+    <% post.categories.each do |category| %>
+      <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+        <%= category.name %>
+      </span>
+    <% end %>
+  </div>
+<% end %>
 </div>

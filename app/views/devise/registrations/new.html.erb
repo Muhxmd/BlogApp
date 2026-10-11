@@ -1,8 +1,7 @@
 <% content_for :title, "Sign Up" %>
 
 <div class="max-w-md mx-auto px-4 py-16 font-sans">
-
-  <!-- Heading -->
+  
   <div class="text-center mb-8">
     <span class="text-[10px] font-extrabold text-[#5B5CE6] tracking-widest uppercase bg-blue-50 px-3 py-1 rounded-full">
       ✦ GET STARTED
@@ -11,64 +10,52 @@
     <p class="text-gray-500 text-xs sm:text-sm">Join us and start sharing your articles.</p>
   </div>
 
-  <!-- Main Sign Up Card -->
-  <div class="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-gray-100">
-
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
-
+  <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-5" }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
-      <!-- Email Field -->
-      <div class="space-y-2">
-        <%= f.label :email, class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", 
-            class: "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] focus:bg-white text-sm text-gray-900 transition", 
-            placeholder: "Enter your email" %>
+      <div>
+        <%= f.label :email, class: "block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] text-sm" %>
       </div>
 
-      <!-- Password Field -->
-      <div class="space-y-2">
-        <div class="flex items-center justify-between">
-          <%= f.label :password, class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
-          <% if @minimum_password_length %>
-            <span class="text-[10px] text-indigo-600 font-medium">Min <%= @minimum_password_length %> chars</span>
+      <div>
+        <%= f.label :password, class: "block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] text-sm" %>
+      </div>
+
+      <div>
+        <%= f.label :password_confirmation, "Confirm Password", class: "block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] text-sm" %>
+      </div>
+
+      <!-- Categories Block: Forced scrollbar to prevent overlapping -->
+      <div class="pt-2 border-t border-gray-100 mt-4">
+        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Select Your Interests</label>
+        <p class="text-[10px] text-gray-500 mb-3">Choose topics to personalize your home feed.</p>
+        
+        <div class="grid grid-cols-2 gap-2 bg-gray-50 border border-gray-200 rounded-xl p-3" style="max-height: 200px; overflow-y: auto; display: grid;">
+          <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |b| %>
+            <label class="flex items-center space-x-2 cursor-pointer bg-white px-2 py-2 rounded border border-gray-200 hover:bg-gray-50">
+              <%= b.check_box(class: "rounded border-gray-300 text-[#5B5CE6] focus:ring-[#5B5CE6]") %>
+              <span class="text-[11px] font-medium text-gray-700 truncate"><%= b.text %></span>
+            </label>
           <% end %>
         </div>
-        <%= f.password_field :password, autocomplete: "new-password", 
-            class: "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] focus:bg-white text-sm text-gray-900 transition", 
-            placeholder: "Create a password" %>
-      </div>
-
-      <!-- Confirm Password Field -->
-      <div class="space-y-2">
-        <%= f.label :password_confirmation, "Confirm Password", class: "block text-xs font-bold text-gray-700 uppercase tracking-wider" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", 
-            class: "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5B5CE6] focus:bg-white text-sm text-gray-900 transition", 
-            placeholder: "Confirm your password" %>
       </div>
 
       <!-- Submit Button -->
-      <div>
-        <%= f.submit "Create Account", 
-            class: "w-full bg-[#2952E3] hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition shadow-md hover:shadow-lg text-xs uppercase tracking-wider cursor-pointer" %>
+      <div class="pt-4">
+        <%= f.submit "Create Account", class: "w-full bg-[#2952E3] hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl cursor-pointer uppercase text-xs tracking-wider" %>
       </div>
-
     <% end %>
 
-    <!-- Devise Shared Links Footer -->
-    <div class="mt-8 pt-6 border-t border-gray-100 text-center text-xs text-gray-500 space-y-2">
+    <div class="mt-6 pt-6 border-t border-gray-100 text-center text-xs text-gray-500 space-y-2 flex flex-col">
       <%= render "devise/shared/links" %>
     </div>
-
-<div class="max-w-md mx-auto px-4 py-6 font-sans">
-
-  <!-- Back Link -->
-  <div class="mb-6">
-    <%= link_to "← Back to Home", root_path, class: "text-xs font-bold text-gray-500 hover:text-[#5B5CE6] transition" %>
   </div>
 
-</div>
+  <div class="text-center mt-6">
+    <%= link_to "← Back to Home", root_path, class: "text-xs font-bold text-gray-500 hover:text-[#5B5CE6]" %>
   </div>
-  
-
 </div>

@@ -5,21 +5,30 @@ class PostsController < ApplicationController
   def index
     @query = params[:q].to_s.strip
 
-    @posts = Post.order(created_at: :desc)
+    # 1. CATEGORY FEED LOGIC
+    # If the user is signed in and has selected preferred categories, show those first.
+    # Otherwise, show all posts.
+    if user_signed_in? && current_user.categories.any?
+      @posts = Post.joins(:categories)
+                   .where(categories: { id: current_user.category_ids })
+                   .distinct
+                   .order(created_at: :desc)
+    else
+      @posts = Post.order(created_at: :desc)
+    end
 
+    # 2. SEARCH LOGIC (Works on top of the category feed)
     if @query.present?
-      # 1. Downcase the search term before sending it to the database
       search_term = "%#{Post.sanitize_sql_like(@query.downcase)}%"
-
       @posts = @posts
         .left_outer_joins(:rich_text_body)
         .where(
-          # 2. Use LOWER() on both the title and the body so everything matches perfectly
           "LOWER(posts.title) LIKE :term OR LOWER(action_text_rich_texts.body) LIKE :term",
           term: search_term
         )
     end
 
+    # 3. PAGINATION
     @pagy, @posts = pagy(@posts, limit: 5)
   end
 
@@ -85,6 +94,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :body, :user_id)
+    # Removed :user_id for security and added category_ids: []
+    params.require(:post).permit(:title, :body, category_ids: [])
   end
 end

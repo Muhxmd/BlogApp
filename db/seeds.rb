@@ -1,70 +1,34 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+medium_categories = [
+  # Technology & Software
+  "Artificial Intelligence", "Blockchain", "Data Science", "Gadgets", "Machine Learning",
+  "Programming", "Software Engineering", "Technology", "Cybersecurity", "Web Development",
+  
+  # Business & Work
+  "Business", "Entrepreneurship", "Leadership", "Marketing", "Productivity", 
+  "Startups", "Freelancing", "Economy", "Management",
+  
+  # Arts, Culture & Media
+  "Art", "Books", "Culture", "Design", "Film", "Music", 
+  "Photography", "Podcasts", "Writing", "Humor",
+  
+  # Personal Development & Health
+  "Health", "Mental Health", "Fitness", "Self Improvement", "Personal Development",
+  "Relationships", "Family", "Mindfulness", "Spirituality",
+  
+  # World & Science
+  "Education", "History", "Philosophy", "Politics", "Science", 
+  "Society", "Environment", "Nature", "Travel"
+]
 
+puts "Cleaning up old categories..."
+# Optional: Uncomment the next line if you want to wipe existing categories every time you seed
+# Category.destroy_all 
 
+puts "Seeding Medium categories..."
 
-# Only allow dummy data in development
-unless Rails.env.development?
-  raise "Dummy data can only be generated in development!"
+medium_categories.each do |category_name|
+  # find_or_create_by ensures we don't create duplicates if you run the seed command twice
+  Category.find_or_create_by!(name: category_name)
 end
 
-puts "Creating dummy users..."
-
-dummy_users = 10.times.map do |i|
-  email = format("dummy-user-%02d@example.com", i + 1)
-
-  User.find_or_create_by!(email: email) do |user|
-    user.password = "DummyPass123!"
-  end
-end
-
-puts "Creating dummy posts, comments, and likes..."
-
-100.times do |i|
-  user = dummy_users[i % dummy_users.length]
-  title = format("Dummy Article %03d", i + 1)
-
-  post = Post.find_or_create_by!(title: title, user: user) do |new_post|
-    new_post.body = <<~BODY
-      This is dummy article number #{i + 1}.
-
-      This article is being used to test pagination, search,
-      article display, comments, and likes in the Rails blog.
-
-      #{("Extra sample content for testing long article layouts. " * (i % 8 + 1))}
-    BODY
-  end
-
-  # Create between 1 and 3 comments per post.
-  (1..(i % 3 + 1)).each do |n|
-    commenter = dummy_users[(i + n) % dummy_users.length]
-
-    Comment.find_or_create_by!(
-      post: post,
-      user: commenter,
-      content: "Dummy comment #{n} on article #{i + 1}."
-    )
-  end
-
-  # Create several likes from different dummy users.
-  (1..(i % 7 + 2)).each do |n|
-    liker = dummy_users[(i + n) % dummy_users.length]
-
-    Like.find_or_create_by!(post: post, user: liker)
-  end
-
-  puts "Created/checked #{title}" if (i + 1) % 10 == 0
-end
-
-puts "Dummy data generation complete!"
-puts "Users: #{User.count}"
-puts "Posts: #{Post.count}"
-puts "Comments: #{Comment.count}"
-puts "Likes: #{Like.count}"
+puts "Successfully seeded #{Category.count} categories!"
