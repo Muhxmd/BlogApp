@@ -14,6 +14,6 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get 'preferences/categories', to: 'application#edit_categories', as: :edit_user_categories
-patch 'preferences/categories', to: 'application#update_categories', as: :update_user_categories
+  get "preferences/categories", to: "application#edit_categories", as: :edit_user_categories
+patch "preferences/categories", to: "application#update_categories", as: :update_user_categories
 end
