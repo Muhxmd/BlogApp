@@ -1,11 +1,12 @@
+
 Rails.application.routes.draw do
   root "home#index"
 
   get "my_articles", to: "my_articles#index", as: :my_articles
 
   resources :posts do
-    resources :comments, only: [ :create, :destroy ]
-    resources :likes, only: [ :create, :destroy ]
+    resources :comments, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
   end
 
   devise_for :users
@@ -14,6 +15,17 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get "preferences/categories", to: "application#edit_categories", as: :edit_user_categories
-patch "preferences/categories", to: "application#update_categories", as: :update_user_categories
+  get "preferences/categories",
+      to: "application#edit_categories",
+      as: :edit_user_categories
+
+  patch "preferences/categories",
+        to: "application#update_categories",
+        as: :update_user_categories
+
+  namespace :api do
+    namespace :v1 do
+      resources :posts, only: [:index, :show, :create, :update, :destroy]
+    end
+  end
 end
