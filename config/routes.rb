@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get "my_articles", to: "my_articles#index", as: :my_articles
 
   resources :posts do
-    resources :comments, only: [:create, :destroy]
-    resources :likes, only: [:create, :destroy]
+    resources :comments, only: [ :create, :destroy ]
+    resources :likes, only: [ :create, :destroy ]
   end
 
   devise_for :users
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :posts, only: [:index, :show, :create, :update, :destroy]
+      resources :posts, only: [ :index, :show, :create, :update, :destroy ]
     end
   end
 end
