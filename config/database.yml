@@ -10,3 +10,19 @@ development:
 test:
   <<: *default
   database: storage/test.sqlite3
+
+production:
+  primary: &primary
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    url: <%= ENV["DATABASE_URL"] %>
+  cache:
+    <<: *primary
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary
+    migrations_paths: db/cable_migrate
